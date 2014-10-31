@@ -1,25 +1,30 @@
 {
-    "appKeys": {},
-    "capabilities": [
-        ""
-    ],
-    "companyName": "buck.jacob@gmail.com",
-    "longName": "Newton Digital",
-    "projectType": "native",
-    "resources": {
-        "media": [
-            {
-                "file": "images/numbers.png",
-                "name": "IMAGE_NUMBERS",
-                "type": "png"
-            }
-        ]
-    },
-    "shortName": "Newton Digital",
-    "uuid": "5391373f-d46e-4bb5-a3f8-d4a2ce67c0b8",
-    "versionCode": 1,
-    "versionLabel": "1.0",
-    "watchapp": {
-        "watchface": true
-    }
+	"appKeys": {},
+	"capabilities": [
+		""
+	],
+	"companyName": "Jacob Buck",
+	"longName": "Newton Digital",
+	"projectType": "native",
+	"resources": {
+		"media": [
+			{
+				"file": "images/menu_icon.png",
+				"name": "IMAGE_MENU_ICON",
+				"type": "png",
+				"menuIcon": true
+			}, {
+				"file": "images/numbers.png",
+				"name": "IMAGE_NUMBERS",
+				"type": "png"
+			}
+		]
+	},
+	"shortName": "Newton Digital",
+	"uuid": "5391373f-d46e-4bb5-a3f8-d4a2ce67c0b8",
+	"versionCode": 1,
+	"versionLabel": "1.0",
+	"watchapp": {
+		"watchface": true
+	}
 }
