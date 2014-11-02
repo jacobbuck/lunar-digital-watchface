@@ -8,11 +8,16 @@ static Layer *s_canvas_layer;
 static GSize s_sprite_size;
 
 static void draw_number(GContext *ctx, GPoint origin, int number) {
+	// Create temporary GBitmap of digit we want to display
 	struct GBitmap *temp_bitmap = gbitmap_create_as_sub_bitmap(s_numbers_bitmap, (GRect){
 		.origin = GPoint(number * SPRITE_SIZE, SPRITE_SIZE),
 		.size = s_sprite_size
 	});
+
+	// Draw digit GBitmap to canvas
 	graphics_draw_bitmap_in_rect(ctx, temp_bitmap, (GRect){ .origin = origin, .size = s_sprite_size });
+
+	// Destroy temporary GBitmap
 	gbitmap_destroy(temp_bitmap);
 }
 
@@ -30,11 +35,15 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
 		hour -= 12;
 	}
 
+	// Only draw first digit of hours if not 0
 	if ((hour / 10) > 0) {
 		draw_number(ctx, GPoint(16, 28), (int) (hour / 10));
 	}
 
+	// Draw second digit of hours
 	draw_number(ctx, GPoint(80, 28), (int) (hour % 10));
+
+	// Draw minute digits
 	draw_number(ctx, GPoint(16, 92), (int) (min / 10));
 	draw_number(ctx, GPoint(80, 92), (int) (min % 10));
 }
@@ -47,14 +56,17 @@ static void window_load(Window *window) {
 	Layer *window_layer = window_get_root_layer(window);
 	GRect window_bounds = layer_get_bounds(window_layer);
 
+	// Set background color of window
 	window_set_background_color(window, GColorBlack);
 
+	// Create canvas layer and add to window
 	s_canvas_layer = layer_create(window_bounds);
 	layer_set_update_proc(s_canvas_layer, canvas_update_proc);
 	layer_add_child(window_layer, s_canvas_layer);
 }
 
 static void window_unload(Window *window) {
+	// Destroy canvas layer
 	layer_destroy(s_canvas_layer);
 }
 
@@ -62,7 +74,7 @@ static void init() {
 	// Creat sprite GSize for later use
 	s_sprite_size = GSize(SPRITE_SIZE, SPRITE_SIZE);
 
-	// Create main Window element and assign to pointer
+	// Create main window element
 	s_window = window_create();
 
 	// Create numbers spritesheet GBitmap
@@ -74,7 +86,7 @@ static void init() {
 		.unload = window_unload
 	});
 
-	// Show the Window on the watch, with animated=true
+	// Show the window on the watch, with animated=true
 	window_stack_push(s_window, true);
 
 	// Register with TickTimerService
@@ -82,9 +94,10 @@ static void init() {
 }
 
 static void deinit() {
-	// Destroy Window
+	// Destroy window
 	window_destroy(s_window);
 
+	// Destroy numbers spritesheet GBitmap
 	gbitmap_destroy(s_numbers_bitmap);
 }
 
