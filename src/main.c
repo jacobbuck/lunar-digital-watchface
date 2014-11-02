@@ -1,6 +1,7 @@
 #include <pebble.h>
 
 const int SPRITE_SIZE = 48;
+const int INVERT_COLORS = true;
 
 static Window *s_window;
 static GBitmap *s_numbers_bitmap;
@@ -9,13 +10,12 @@ static GSize s_sprite_size;
 
 static void draw_number(GContext *ctx, GPoint origin, int number) {
 	// Create temporary GBitmap of digit we want to display
-	struct GBitmap *temp_bitmap = gbitmap_create_as_sub_bitmap(s_numbers_bitmap, (GRect){
-		.origin = GPoint(number * SPRITE_SIZE, SPRITE_SIZE),
-		.size = s_sprite_size
-	});
+	struct GBitmap *temp_bitmap = gbitmap_create_as_sub_bitmap(s_numbers_bitmap,
+		(GRect){.origin = GPoint(number * SPRITE_SIZE, true == INVERT_COLORS ? SPRITE_SIZE : 0), .size = s_sprite_size});
 
 	// Draw digit GBitmap to canvas
-	graphics_draw_bitmap_in_rect(ctx, temp_bitmap, (GRect){ .origin = origin, .size = s_sprite_size });
+	graphics_draw_bitmap_in_rect(ctx, temp_bitmap,
+		(GRect){.origin = origin, .size = s_sprite_size});
 
 	// Destroy temporary GBitmap
 	gbitmap_destroy(temp_bitmap);
@@ -57,7 +57,7 @@ static void window_load(Window *window) {
 	GRect window_bounds = layer_get_bounds(window_layer);
 
 	// Set background color of window
-	window_set_background_color(window, GColorBlack);
+	window_set_background_color(window, true == INVERT_COLORS ? GColorBlack : GColorWhite);
 
 	// Create canvas layer and add to window
 	s_canvas_layer = layer_create(window_bounds);
