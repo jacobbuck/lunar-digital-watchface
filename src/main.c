@@ -10,18 +10,22 @@ static BitmapLayer *s_number2_layer;
 static BitmapLayer *s_number3_layer;
 
 static GBitmap *s_numbers_bitmap;
-static GBitmap *s_tmp_bitmap;
 
-static void draw_blank_to_layer(BitmapLayer *layer) {
-	s_tmp_bitmap = gbitmap_create_blank(GSize(SPRITE_SIZE, SPRITE_SIZE));
+static GBitmap *s_number0_bitmap;
+static GBitmap *s_number1_bitmap;
+static GBitmap *s_number2_bitmap;
+static GBitmap *s_number3_bitmap;
+
+static void draw_blank_to_layer(BitmapLayer *layer, GBitmap *bitmap) {
+	bitmap = gbitmap_create_blank(GSize(SPRITE_SIZE, SPRITE_SIZE));
 	bitmap_layer_set_compositing_mode(layer, GCompOpAssign);
-	bitmap_layer_set_bitmap(layer, s_tmp_bitmap);
+	bitmap_layer_set_bitmap(layer, bitmap);
 }
 
-static void draw_number_to_layer(BitmapLayer *layer, int number) {
-	s_tmp_bitmap = gbitmap_create_as_sub_bitmap(s_numbers_bitmap, GRect(number * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE));
+static void draw_number_to_layer(BitmapLayer *layer, GBitmap *bitmap, int number) {
+	bitmap = gbitmap_create_as_sub_bitmap(s_numbers_bitmap, GRect(number * SPRITE_SIZE, 0, SPRITE_SIZE, SPRITE_SIZE));
 	bitmap_layer_set_compositing_mode(layer, GCompOpAssignInverted);
-	bitmap_layer_set_bitmap(layer, s_tmp_bitmap);
+	bitmap_layer_set_bitmap(layer, bitmap);
 }
 
 static void update_time() {
@@ -36,15 +40,20 @@ static void update_time() {
 		hour -= 12;
 	}
 
+	gbitmap_destroy(s_number0_bitmap);
+	gbitmap_destroy(s_number1_bitmap);
+	gbitmap_destroy(s_number2_bitmap);
+	gbitmap_destroy(s_number3_bitmap);
+
 	if ((hour / 10) < 1) {
-		draw_blank_to_layer(s_number0_layer);
+		draw_blank_to_layer(s_number0_layer, s_number0_bitmap);
 	} else {
-		draw_number_to_layer(s_number0_layer, (int) (hour / 10));
+		draw_number_to_layer(s_number0_layer, s_number0_bitmap, (int) (hour / 10));
 	}
 
-	draw_number_to_layer(s_number1_layer, (int) (hour % 10));
-	draw_number_to_layer(s_number2_layer, (int) (min / 10));
-	draw_number_to_layer(s_number3_layer, (int) (min % 10));
+	draw_number_to_layer(s_number1_layer, s_number1_bitmap, (int) (hour % 10));
+	draw_number_to_layer(s_number2_layer, s_number2_bitmap, (int) (min / 10));
+	draw_number_to_layer(s_number3_layer, s_number3_bitmap, (int) (min % 10));
 }
 
 static void main_window_load(Window *window) {
@@ -69,7 +78,11 @@ static void main_window_load(Window *window) {
 
 static void main_window_unload(Window *window) {
 	gbitmap_destroy(s_numbers_bitmap);
-	gbitmap_destroy(s_tmp_bitmap);
+
+	gbitmap_destroy(s_number0_bitmap);
+	gbitmap_destroy(s_number1_bitmap);
+	gbitmap_destroy(s_number2_bitmap);
+	gbitmap_destroy(s_number3_bitmap);
 
 	bitmap_layer_destroy(s_number0_layer);
 	bitmap_layer_destroy(s_number1_layer);
