@@ -57,13 +57,12 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 
 static void window_load(Window *window) {
 	Layer *window_layer = window_get_root_layer(window);
-	GRect window_bounds = layer_get_bounds(window_layer);
 
 	// Set background color of window
 	window_set_background_color(window, true == INVERT_COLORS ? GColorBlack : GColorWhite);
 
 	// Create canvas layer and add to window
-	s_canvas_layer = layer_create(window_bounds);
+	s_canvas_layer = layer_create(layer_get_bounds(window_layer));
 	layer_set_update_proc(s_canvas_layer, canvas_update_proc);
 	layer_add_child(window_layer, s_canvas_layer);
 }
