@@ -11,11 +11,14 @@ static GSize s_sprite_size;
 static void draw_number(GContext *ctx, GPoint origin, int number) {
 	// Create temporary GBitmap of digit we want to display
 	struct GBitmap *temp_bitmap = gbitmap_create_as_sub_bitmap(s_numbers_bitmap,
-		(GRect){.origin = GPoint(number * SPRITE_SIZE, true == INVERT_COLORS ? SPRITE_SIZE : 0), .size = s_sprite_size});
+		(GRect) {
+			.origin = GPoint(number * SPRITE_SIZE, (true == INVERT_COLORS ? SPRITE_SIZE : 0)),
+			.size = s_sprite_size
+		});
 
 	// Draw digit GBitmap to canvas
 	graphics_draw_bitmap_in_rect(ctx, temp_bitmap,
-		(GRect){.origin = origin, .size = s_sprite_size});
+		(GRect) {.origin = origin, .size = s_sprite_size});
 
 	// Destroy temporary GBitmap
 	gbitmap_destroy(temp_bitmap);
