@@ -14,8 +14,12 @@
 				"type": "png",
 				"menuIcon": true
 			}, {
-				"file": "images/numbers.png",
-				"name": "IMAGE_NUMBERS",
+				"file": "images/numbers_dark.png",
+				"name": "IMAGE_NUMBERS_DARK",
+				"type": "png"
+			}, {
+				"file": "images/numbers_light.png",
+				"name": "IMAGE_NUMBERS_LIGHT",
 				"type": "png"
 			}
 		]

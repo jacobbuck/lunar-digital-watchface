@@ -1,7 +1,6 @@
 #include <pebble.h>
 
-const int SPRITE_SIZE = 48;
-const int INVERT_COLORS = true;
+const int DARK_THEME = true;
 
 static Window *s_window;
 static GBitmap *s_numbers_bitmap;
@@ -12,7 +11,7 @@ static void draw_number(GContext *ctx, GPoint origin, int number) {
 	// Create temporary GBitmap of digit we want to display
 	struct GBitmap *temp_bitmap = gbitmap_create_as_sub_bitmap(s_numbers_bitmap,
 		(GRect) {
-			.origin = GPoint(number * SPRITE_SIZE, (true == INVERT_COLORS ? SPRITE_SIZE : 0)),
+			.origin = GPoint(number * s_sprite_size.w, 0),
 			.size = s_sprite_size
 		});
 
@@ -59,7 +58,9 @@ static void window_load(Window *window) {
 	Layer *window_layer = window_get_root_layer(window);
 
 	// Set background color of window
-	window_set_background_color(window, true == INVERT_COLORS ? GColorBlack : GColorWhite);
+	if (true == DARK_THEME) {
+		window_set_background_color(window, GColorBlack);
+	}
 
 	// Create canvas layer and add to window
 	s_canvas_layer = layer_create(layer_get_bounds(window_layer));
@@ -74,13 +75,16 @@ static void window_unload(Window *window) {
 
 static void init() {
 	// Creat sprite GSize for later use
-	s_sprite_size = GSize(SPRITE_SIZE, SPRITE_SIZE);
+	s_sprite_size = GSize(48, 48);
 
 	// Create main window element
 	s_window = window_create();
 
 	// Create numbers spritesheet GBitmap
-	s_numbers_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_NUMBERS);
+	s_numbers_bitmap = gbitmap_create_with_resource(true == DARK_THEME ?
+		RESOURCE_ID_IMAGE_NUMBERS_DARK :
+		RESOURCE_ID_IMAGE_NUMBERS_LIGHT
+	);
 
 	// Set handlers to manage the elements inside the Window
 	window_set_window_handlers(s_window, (WindowHandlers) {
