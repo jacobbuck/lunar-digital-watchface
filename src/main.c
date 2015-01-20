@@ -45,8 +45,12 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
 	// Draw second digit of hours
 	draw_number(ctx, GPoint(80, 28), (int) (hour % 10));
 
-	// Draw minute digits
-	draw_number(ctx, GPoint(16, 92), (int) (min / 10));
+	// Only draw first digit of minutes if not 0
+	if ((min / 10) > 0) {
+		draw_number(ctx, GPoint(16, 92), (int) (min / 10));
+	}
+
+	// Draw second digit of minutes
 	draw_number(ctx, GPoint(80, 92), (int) (min % 10));
 }
 
