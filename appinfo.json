@@ -4,7 +4,7 @@
 		""
 	],
 	"companyName": "Jacob Buck",
-	"longName": "Newton Digital",
+	"longName": "New Digital",
 	"projectType": "native",
 	"resources": {
 		"media": [
@@ -14,17 +14,13 @@
 				"type": "png",
 				"menuIcon": true
 			}, {
-				"file": "images/numbers_dark.png",
-				"name": "IMAGE_NUMBERS_DARK",
-				"type": "png"
-			}, {
-				"file": "images/numbers_light.png",
-				"name": "IMAGE_NUMBERS_LIGHT",
+				"file": "images/numbers.png",
+				"name": "IMAGE_NUMBERS",
 				"type": "png"
 			}
 		]
 	},
-	"shortName": "Newton Digital",
+	"shortName": "New Digital",
 	"uuid": "5391373f-d46e-4bb5-a3f8-d4a2ce67c0b8",
 	"versionCode": 1,
 	"versionLabel": "1.0",

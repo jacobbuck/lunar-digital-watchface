@@ -1,11 +1,11 @@
 #include <pebble.h>
 
-const int DARK_THEME = true;
-
 static Window *s_window;
 static GBitmap *s_numbers_bitmap;
 static Layer *s_canvas_layer;
 static GSize s_sprite_size;
+
+static int s_invert = 1;
 
 static void draw_number(GContext *ctx, GPoint origin, int number) {
 	// Create temporary GBitmap of digit we want to display
@@ -14,6 +14,10 @@ static void draw_number(GContext *ctx, GPoint origin, int number) {
 			.origin = GPoint(number * s_sprite_size.w, 0),
 			.size = s_sprite_size
 		});
+
+	if (s_invert == 1) {
+		graphics_context_set_compositing_mode(ctx, GCompOpAssignInverted);
+	}
 
 	// Draw digit GBitmap to canvas
 	graphics_draw_bitmap_in_rect(ctx, temp_bitmap,
@@ -61,9 +65,8 @@ static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
 static void window_load(Window *window) {
 	Layer *window_layer = window_get_root_layer(window);
 
-	// Set background color of window
-	if (true == DARK_THEME) {
-		window_set_background_color(window, GColorBlack);
+	if (s_invert == 1) {
+		window_set_background_color(s_window, GColorBlack);
 	}
 
 	// Create canvas layer and add to window
@@ -85,10 +88,7 @@ static void init() {
 	s_window = window_create();
 
 	// Create numbers spritesheet GBitmap
-	s_numbers_bitmap = gbitmap_create_with_resource(true == DARK_THEME ?
-		RESOURCE_ID_IMAGE_NUMBERS_DARK :
-		RESOURCE_ID_IMAGE_NUMBERS_LIGHT
-	);
+	s_numbers_bitmap = gbitmap_create_with_resource(RESOURCE_ID_IMAGE_NUMBERS);
 
 	// Set handlers to manage the elements inside the Window
 	window_set_window_handlers(s_window, (WindowHandlers) {
