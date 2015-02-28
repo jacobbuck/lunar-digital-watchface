@@ -1,5 +1,5 @@
-# New Digital
+# Lunar Digital
 
-Clean thin lines.
+Clean thin geometric lines.
 
 ![Screenshot](screenshot.png)
