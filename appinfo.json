@@ -23,7 +23,7 @@
 	"shortName": "Lunar Digital",
 	"uuid": "5391373f-d46e-4bb5-a3f8-d4a2ce67c0b8",
 	"versionCode": 1,
-	"versionLabel": "1.1",
+	"versionLabel": "1.2",
 	"watchapp": {
 		"watchface": true
 	}
