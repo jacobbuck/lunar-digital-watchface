@@ -37,15 +37,15 @@ static void canvas_update_proc(Layer *layer, GContext *ctx) {
 
 	// Only draw first digit of hours if not 0
 	if ((hour / 10) > 0) {
-		draw_number(ctx, GPoint(16, 28), (int) (hour / 10));
+		draw_number(ctx, GPoint(10, 22), (int) (hour / 10));
 	}
 
 	// Draw second digit of hours
-	draw_number(ctx, GPoint(80, 28), (int) (hour % 10));
+	draw_number(ctx, GPoint(80, 22), (int) (hour % 10));
 
 	// Only draw first digit of minutes if not 0
 	if ((min / 10) > 0) {
-		draw_number(ctx, GPoint(16, 92), (int) (min / 10));
+		draw_number(ctx, GPoint(10, 92), (int) (min / 10));
 	}
 
 	// Draw second digit of minutes
@@ -75,7 +75,7 @@ static void window_unload(Window *window) {
 
 static void init() {
 	// Creat sprite GSize for later use
-	s_sprite_size = GSize(48, 48);
+	s_sprite_size = GSize(54, 54);
 
 	// Create main window element
 	s_window = window_create();

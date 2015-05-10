@@ -2,4 +2,4 @@
 
 Clean thin geometric lines.
 
-![Screenshot](screenshot.png)
+![Screenshot](promo.png)
